@@ -17,5 +17,4 @@
 * We also need preventive maintenance logic so that we can save a lot on unnecessary plant breakdowns.
 * We developed an understanding of working with different types of pneumatic cylinders and solenoid valves and how to use them in our system.
 * It is very important to have a robust PLC program that should not fail in any condition because if it fails, it can cost a lot to the plant, and it might damage the expensive components. The worst case is that it may hurt someone if our program fails to safely terminate a process because of safety issues.
-  System setup images:
 * All the images used in this report are from our actual setup, and we have prepared a demonstration video that shows the whole setup.
