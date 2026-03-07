@@ -1,14 +1,12 @@
 # Demonstration Video #1:
 
-[https://drive.google.com/file/d/13v-a29XmUb4YCfFoLEbIvHaU\_6uxZ1su/view?usp=drive\_link](https://drive.google.com/file/d/1L9ESjDdyWR5ueM1aXDrVjSyIeBBjk_IC/view?usp=sharing)
+https://drive.google.com/file/d/13v-a29XmUb4YCfFoLEbIvHaU_6uxZ1su/view?usp=drive_link
 
 # Demonstration Video #2:
 
 https://drive.google.com/file/d/1iHogu2stk_f4VkaUr_RzlIDm672PT2Lk/view?usp=drive_link
 
-## 
-
-## \# Autonomous Rover using ROS2 \& SLAM
+## Autonomous Rover using ROS2 \& SLAM
 
 ###### 
 
