@@ -111,6 +111,7 @@ Technologies being explored:
 # Contact
 LinkedIn  
 https://linkedin.com/in/kundan-singh-shekhawat
+
 Email  
 kundansingh.shekhawat@students.mq.edu.au
 
