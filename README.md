@@ -214,27 +214,39 @@ ABB RobotStudio • IRB120 • Robot Path Programming
 
 
 
+\## IIoT Condition Monitoring of an Electric Motor
+
+Industrial IoT system for real-time motor health monitoring and fault classification, published as a research paper (ICST 2026).
+
+
+
+Key contributions:
+
+\- ESP32-based sensor node for current, temperature, RPM, and vibration data
+
+\- MQTT and ThingSpeak integration for cloud data logging
+
+\- ML pipeline (Logistic Regression, SVM) for fault classification (e.g. loose screw, misalignment)
+
+\- Live prediction GUI for real-time fault detection
+
+
+
+Technologies:
+
+ESP32 • MQTT • ThingSpeak • Python • Scikit-learn • Arduino IDE
+
+
+
+---
+
+
+
 \# Current Work
 
 
 
-I am currently working on:
-
-
-
-\*\*IoT-based device monitoring system\*\*  
-
-A system designed to track device performance and analyse maintenance schedules using real-time data collection.
-
-
-
-Technologies being explored:
-
-\- ESP32
-
-\- IoT data monitoring
-
-\- Predictive maintenance analysis
+I am currently expanding my portfolio with new robotics, automation, and IoT-based projects as I continue my studies and independent work.
 
 
 
