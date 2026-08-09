@@ -7,13 +7,14 @@
 //for wifi
 //#include "arduino_wifi.h"
 #include <WiFiNINA.h>
+#include "arduino_secrets.h"  // keep credentials out of source control - see arduino_secrets.h.example
 
-char ssid[] = "Macquarie OneNet";  //WiFi SSID “eduroam/Macquarie OneNet”
+char ssid[] = SECRET_SSID;  //WiFi SSID “eduroam/Macquarie OneNet”
 
 // Enterprise credentials
-char username[] = "48849855";     // student ID
-char password[] = "@Kkunnu#034";  // Password
-char identity[] = "48849855";     // "anonymous" for eduroam and student ID for MQOneNET
+char username[] = SECRET_USERNAME;  // student ID
+char password[] = SECRET_PASSWORD;  // Password
+char identity[] = SECRET_IDENTITY;  // "anonymous" for eduroam and student ID for MQOneNET
 
 int status = WL_IDLE_STATUS;
 WiFiClient client;
@@ -22,8 +23,8 @@ WiFiClient client;
 WiFiClient thingSpeakClient;
 extern MqttClient mqttClient;
 
-unsigned long channelID = 3339753;             //YOUR_CHANNEL_ID
-const char* writeAPIKey = "I2YW7SFLCU87EJF1";  //YOUR_WRITE_API_KEY
+unsigned long channelID = SECRET_CH_ID;          //YOUR_CHANNEL_ID
+const char* writeAPIKey = SECRET_WRITE_APIKEY;   //YOUR_WRITE_API_KEY
 
 //Master
 unsigned long lastReportTime = 0;
