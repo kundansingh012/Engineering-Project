@@ -60,7 +60,7 @@ Key contributions:
 - System integration testing
 
 Technologies:
-ROS2 • Python • Jetson Nano • LiDAR • RViz
+ROS2 • Python • Jetson Orin Nano • LiDAR • RViz
 
 ---
 
@@ -86,7 +86,7 @@ Key contributions:
 - Alarm system and preventive maintenance logic
 
 Technologies:
-Omron NX1P2 PLC • Ladder Logic • NA4 HMI • Industrial Sensors
+Omron NX1P2 PLC • Ladder Logic • NA5 HMI • Pneumatics
 
 ---
 

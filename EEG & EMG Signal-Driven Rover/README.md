@@ -1,135 +1,106 @@
-# Demonstration Video #1:
+# EEG & EMG Signal-Driven Rover
 
-https://drive.google.com/file/d/11HOqrbe95BxjA0kZQDmbAcDNC5bvYzF-/view?usp=drive\_link
+A two-wheeled rover driven by the body's own electrical signals: brain activity (EEG) moves it forward, and muscle activity in each arm (EMG) steers it. A wearable sensing board reads the signals and sends commands to the rover over Bluetooth Low Energy.
 
+Prepared as a hands-on build and lesson plan for Robothink (November 2025).
 
-# Demonstration Video #2:
+**Demonstration videos:** [Video 1](https://drive.google.com/file/d/11HOqrbe95BxjA0kZQDmbAcDNC5bvYzF-/view?usp=drive_link) · [Video 2](https://drive.google.com/file/d/1jfVsmZnXtSiHwSRBjM_QpO7BP4vkhlEd/view?usp=drive_link)
 
-https://drive.google.com/file/d/1jfVsmZnXtSiHwSRBjM_QpO7BP4vkhlEd/view?usp=drive_link
+<p align="center">
+  <img src="images/rover.jpg" alt="The assembled rover with motor driver and XIAO ESP32C6" width="480">
+</p>
 
+## My contribution
 
+- Designed and assembled the rover hardware
+- Integrated the NPG Lite sensing board and the XIAO ESP32C6 into one system
+- Wired the MX1508 motor driver and DC motors
+- Uploaded existing firmware to both boards
+- Tested the rover's response to EEG and EMG signals
+- Wrote the lesson plan in `EEG EMG Rover.pdf`
 
-## \# EEG \& EMG Controlled Rover Prototype
+The firmware in this folder is existing code for the NPG Lite platform, not written by me.
 
-## 
+## How it works
 
-###### \## Overview
+The system has a talker and a listener.
 
-This project demonstrates a prototype rover controlled using EEG and EMG bio-signals. The rover uses dual ESP32 boards for signal communication and motion control. My role focused on building the rover hardware, integrating the components, uploading the firmware, and testing system functionality.
+**Talker: NPG Lite (worn by the user).** An ESP32-based biopotential board from Upside Down Labs reads three channels: one EEG and one EMG from each arm.
 
-## 
+**Listener: XIAO ESP32C6 (on the rover).** It connects to the talker over BLE, receives a command number, and switches the motor driver pins.
 
-###### \## Project Objectives
+| Signal | Command | Rover action |
+|---|---|---|
+| EEG beta-band power above threshold (focus) | 3 | Drive forward |
+| EMG from one arm | 1 or 2 | Turn, by driving one wheel |
+| EMG from both arms together | 4 | Reverse |
+| None of the above | 0 | Stop |
 
-\- Build a rover platform controlled by EEG and EMG signals
+### Signal processing on the talker (`BLE-BCI-Car-Remote.ino`)
 
-\- Integrate bio-signal input hardware with rover control hardware
+- Samples all three channels at 512 Hz.
+- Removes 50 Hz mains noise from every channel with a notch filter.
+- **EEG:** low-pass filters the signal, runs a 512-point FFT, and computes power in the delta, theta, alpha, beta and gamma bands. When beta power exceeds 5% of total power, it sends "forward".
+- **EMG:** high-pass filters each arm's signal at 70 Hz and tracks its envelope with a moving average. An envelope above the threshold counts as a flex.
 
-\- Enable signal transmission between control board and rover board
+Both thresholds are constants in the sketch and need tuning for each person.
 
-\- Validate motion response of the rover
+### Motor control on the listener (`BLE-BCI-Car.ino`)
 
-## 
+The XIAO scans for the talker's BLE service, subscribes to notifications, and sets four output pins (`D0`–`D3`) that feed the MX1508's inputs for the left and right motors.
 
-###### \## My Contribution
+<p align="center">
+  <img src="images/rover-wiring.png" alt="Wiring between the XIAO ESP32C6, MX1508 motor driver, battery and two DC motors" width="600">
+</p>
 
-My specific contribution to this project included:
+## Hardware
 
-\- Designing and assembling the rover hardware
+| Part | Purpose |
+|---|---|
+| NPG Lite | Reads EEG and EMG signals and sends commands |
+| Snap cables and gel electrodes | Connect the board to the skin |
+| Nuprep gel and alcohol wipes | Clean the skin and improve electrode contact |
+| XIAO ESP32C6 | Receives commands on the rover |
+| MX1508 dual H-bridge driver | Drives both motors, up to 1.5 A each |
+| 2 × geared DC motors (6–12 V) | Differential drive |
+| Robothink chassis blocks, wheels, battery | Rover body and power |
 
-\- Integrating ESP32 and XIAO ESP32 boards into the system
+<p align="center">
+  <img src="images/electrode-placement.png" alt="Electrode placement for the EEG and EMG channels" width="760">
+</p>
 
-\- Connecting the MX1508 motor driver and DC motors
+## Building it
 
-\- Uploading existing code to the boards
+1. Assemble the chassis with the two motors and wheels.
+2. Connect the motors to the MX1508: motor A to the left wheel, motor B to the right.
+3. Wire the MX1508 inputs to pins `D0`–`D3` on the XIAO ESP32C6 and connect the battery.
+4. In the Arduino IDE, install the **esp32** board package by Espressif, version 3.2.0, and the Adafruit NeoPixel library.
+5. Select **ESP32C6 Dev Module** and enable **USB CDC On Boot**.
+6. Upload `BLE-BCI-Car-Remote.ino` to the NPG Lite and `BLE-BCI-Car.ino` to the XIAO.
+7. Clean the skin, attach the electrodes and snap cables, and power both boards. They pair automatically.
 
-\- Testing the rover for signal-based movement response
+The lesson plan PDF walks through each step with photos.
 
-## 
+## Results
 
-###### \## Technologies Used
+- Assembled and tested the rover platform.
+- Verified the wireless link between the sensing board and the rover.
+- Demonstrated rover movement controlled by EEG and EMG signals.
 
-\- ESP32
+## Future improvements
 
-\- XIAO ESP32
+- Better signal filtering and classification
+- Custom firmware for finer control
+- More robust wireless communication
+- Improved stability and motion precision
 
-\- Arduino IDE
+## Repository contents
 
-\- MX1508 Motor Driver
+- `BLE-BCI-Car-Remote.ino` — talker firmware for the NPG Lite
+- `BLE-BCI-Car.ino` — listener firmware for the rover
+- `EEG EMG Rover.pdf` — lesson plan with build steps
+- `images/` — figures used in this README
 
-\- DC Motors
+## Technologies
 
-\- EEG/EMG Electrodes
-
-## 
-
-###### \## Hardware Setup
-
-\- One ESP32 board used for reading EEG/EMG-related signals
-
-\- One XIAO ESP32 board mounted on the rover
-
-\- MX1508 motor driver for motor actuation
-
-\- Two DC motors for rover movement
-
-\- Electrodes for body signal acquisition
-
-## 
-
-###### \## System Features
-
-\- Bio-signal based control concept
-
-\- Wireless communication between controller and rover
-
-\- Differential drive rover platform
-
-\- Embedded hardware integration and system testing
-
-## 
-
-###### \## Repository Contents
-
-\- `code/` - uploaded firmware files used in the project
-
-\- `wiring/` - wiring diagrams and hardware connections
-
-\- `report/` - project notes or documentation
-
-## 
-
-###### \## How It Works
-
-1\. EEG/EMG signals are acquired through electrodes.
-
-2\. The controller ESP32 processes/transmits the signal information.
-
-3\. The rover-side XIAO ESP32 receives control information.
-
-4\. The MX1508 motor driver actuates the motors to move the rover.
-
-## 
-
-###### \## Results
-
-\- Successfully assembled and tested the rover platform
-
-\- Verified hardware integration between control and rover modules
-
-\- Demonstrated signal-based rover movement
-
-## 
-
-###### \## Future Improvements
-
-\- Improve signal filtering and classification
-
-\- Develop custom firmware for better control
-
-\- Add more robust wireless communication
-
-\- Improve stability and motion precision
-
-## 
-
+ESP32 (NPG Lite, XIAO ESP32C6) • Bluetooth Low Energy • Arduino IDE • ESP-DSP (FFT) • MX1508 motor driver • EEG/EMG electrodes
