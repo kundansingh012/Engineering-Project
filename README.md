@@ -104,16 +104,17 @@ ABB RobotStudio • IRB120 • Robot Path Programming
 ---
 
 ## IIoT Condition Monitoring of an Electric Motor
-Industrial IoT system for real-time motor health monitoring and fault classification, published as a research paper (ICST 2026).
+Low-cost Industrial IoT system for real-time motor health monitoring and fault classification. Co-authored research paper accepted at ICST 2026.
 
 Key contributions:
-- ESP32-based sensor node for current, temperature, RPM, and vibration data
-- MQTT and ThingSpeak integration for cloud data logging
-- ML pipeline (Logistic Regression, SVM) for fault classification (e.g. loose screw, misalignment)
-- Live prediction GUI for real-time fault detection
+- Arduino Nano 33 IoT sensor node for vibration, current, temperature, and RPM data
+- On-device RMS and crest factor extraction over 20-second windows
+- MQTT, Node-RED, and ThingSpeak integration for live dashboards and cloud logging
+- ML pipeline classifying healthy, loose-screw, and misalignment conditions (SVM 95.0% test accuracy vs 90.6% for Logistic Regression)
+- Live fault prediction from the MQTT stream
 
 Technologies:
-ESP32 • MQTT • ThingSpeak • Python • Scikit-learn • Arduino IDE
+Arduino Nano 33 IoT • MQTT • Node-RED • ThingSpeak • Python • Scikit-learn • Arduino IDE
 
 ---
 
